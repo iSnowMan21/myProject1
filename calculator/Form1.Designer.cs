@@ -38,7 +38,6 @@ namespace ConnectionAPIGUI
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,23 +127,12 @@ namespace ConnectionAPIGUI
             this.label4.TabIndex = 9;
             this.label4.Text = "label4";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(363, 536);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 35);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "SUBMIT";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
-            this.ClientSize = new System.Drawing.Size(952, 623);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(952, 545);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dataGridView1);
@@ -177,7 +165,6 @@ namespace ConnectionAPIGUI
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
     }
 }
 

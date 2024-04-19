@@ -12,15 +12,17 @@ namespace ConnectionAPIGUI
 
         public static List<Search> addFilm(string keyword)
         {
-            
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://www.omdbapi.com/");
+
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("https://www.omdbapi.com/")
+            };
             client.DefaultRequestHeaders.Accept.Add(
                new MediaTypeWithQualityHeaderValue("application/json"));
             List<Search> allResults = new List<Search>();
             for (int i = 1; ; i++)
             {
-                var response = client.GetAsync($"?apikey=d554bc03&s={keyword}&page={i}").Result;
+                var response = client.GetAsync($"?apikey=4c711f74&s={keyword}&page={i}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var dataObjects = response.Content.ReadAsStringAsync().Result;

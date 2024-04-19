@@ -131,11 +131,20 @@ namespace ConnectionAPIGUI
             {
                 //int[] theData = new int[] { -14, 17, 5, 11, 2 };
                 //dataGridView1.DataSource = theData.Where(x => x > 0).Select((x, index) =>
-                 //   new { RecNo = index + 1, ColumnName = x }).OrderByDescending(x => x.ColumnName).ToList();
+                //   new { RecNo = index + 1, ColumnName = x }).OrderByDescending(x => x.ColumnName).ToList();
+                String str = "Movies:\n"; 
+                foreach (var item in Commands.addFilm(textBox1.Text))
+                {
+                    str += item.Title + "\n";
+                }
+                label4.Text = str;
 
                 dataGridView1.DataSource = Commands.addFilm(textBox1.Text).ToArray().Select((x, index) =>
                     new { Number = index + 1, Type = x.Type, Title = x.Title, Year = x.year, Poster = x.Poster }).ToList();
+
+                label1.Text = "OK";
                 
+
             }
 
             if (comboBox2.Text == "Remove Film")
@@ -167,10 +176,6 @@ namespace ConnectionAPIGUI
             dataGridView1.Columns.Insert(0, checkBoxColumn);
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
 
