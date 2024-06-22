@@ -9,9 +9,11 @@ namespace ConnectionAPIGUI
 {
     internal class Commands
     {
+        public static List<Film> films = new List<Film>();
 
-        public static List<Search> addFilm(string keyword)
+        public static void addFilm(string keyword)
         {
+            films.Clear();
 
             var client = new HttpClient
             {
@@ -19,27 +21,29 @@ namespace ConnectionAPIGUI
             };
             client.DefaultRequestHeaders.Accept.Add(
                new MediaTypeWithQualityHeaderValue("application/json"));
-            List<Search> allResults = new List<Search>();
-            for (int i = 1; ; i++)
+            //List<Search> allResults = new List<Search>();
+            for (int i = 1; i < 10; i++)
             {
                 var response = client.GetAsync($"?apikey=4c711f74&s={keyword}&page={i}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var dataObjects = response.Content.ReadAsStringAsync().Result;
                     Answer ans = JsonConvert.DeserializeObject<Answer>(dataObjects);
-                    if (ans.search != null)
+                    if (ans.Search != null) 
+                    foreach (var item in ans.Search)
                     {
-                        allResults.AddRange(ans.search);
+                        films.Add(new Film(false, item.Title, item.Year, item.ImdbID, item.Type, item.Poster));
                     }
                 }
                 else
                 {
+
+                //Car car1 = new Car("white", 10000)
                     break;
                 }
             }
 
-            return allResults;
-            //return strInsert;
+
         }
         public static string DeleteMovie(ConnectionWithDataBase conn,string titleToDelete)
         {

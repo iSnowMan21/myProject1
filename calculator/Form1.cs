@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace ConnectionAPIGUI
@@ -27,12 +30,33 @@ namespace ConnectionAPIGUI
             con.LoadDataForDataGridView().Fill(dataTable);
             dataGridView1.DataSource = dataTable;
 
-            //label4.Text = dataGridView1.Rows[1].Cells.;
-
-            if (dataGridView1.Columns[0].Name != "checkBoxColumn")
+            /* DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+             checkBoxColumn.Name = "CheckBoxColumn";
+             checkBoxColumn.HeaderText = "Select";
+             checkBoxColumn.Width = 50;
+             //if col[0] != ckeckbox insert
+             if (dataGridView1.Columns[0] != checkBoxColumn) { 
+                 dataGridView1.Columns.Insert(0, checkBoxColumn);
+             }*/
+            bool checkBoxColumnExists = false;
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
             {
-                AddCheckBoxColumn();
+                if (column.Name == "CheckBoxColumn")
+                {
+                    checkBoxColumnExists = true;
+                    break;
+                }
             }
+            if (!checkBoxColumnExists)
+            {
+                DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+                checkBoxColumn.Name = "CheckBoxColumn";
+                checkBoxColumn.HeaderText = "Select";
+                checkBoxColumn.Width = 50;
+                dataGridView1.Columns.Insert(0, checkBoxColumn);
+            }
+
+
         }
         /*
          * 
@@ -44,10 +68,15 @@ namespace ConnectionAPIGUI
          */
         private void LoadDataInfoYear(string year)
         {
-
-            dataTable = new DataTable();
-            con.InfoYear(year).Fill(dataTable);
-            dataGridView1.DataSource = dataTable;
+            
+            dataGridView1.Columns.Add("title", "Title");
+            dataGridView1.Columns.Add("year", "Year");
+            dataGridView1.Columns.Add("imdbID", "IMDb ID");
+            dataGridView1.Columns.Add("type", "Type");
+            dataGridView1.Columns.Add("poster", "Poster");
+            //dataTable = new DataTable();
+            //con.InfoYear(year).Fill(dataTable);
+            //dataGridView1.DataSource = dataTable;
         }
 
 
@@ -94,7 +123,8 @@ namespace ConnectionAPIGUI
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBox2.SelectedItem != null)
+            
+            if (comboBox2.SelectedItem != null)
             {
                 textBox1.Visible = true;
                 label2.Visible = true;
@@ -123,41 +153,61 @@ namespace ConnectionAPIGUI
                 dataGridView1.Visible = true;
                 label3.Text = "";
             }
+            textBox1.Enabled = !textBox1.Enabled;
+            button1.Visible = !button1.Visible;
 
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if(comboBox2.Text == "Add Film")
+            
+            if (comboBox2.Text == "Add Film")
             {
+               textBox1.Enabled = true;
+                //button1.Visible = true;
                 //int[] theData = new int[] { -14, 17, 5, 11, 2 };
                 //dataGridView1.DataSource = theData.Where(x => x > 0).Select((x, index) =>
                 //   new { RecNo = index + 1, ColumnName = x }).OrderByDescending(x => x.ColumnName).ToList();
-                String str = "Movies:\n"; 
-                foreach (var item in Commands.addFilm(textBox1.Text))
+
+                //dataGridView1.Rows.Clear();
+                //dataGridView1.Columns.Clear();
+
+
+
+                label4.Text = "Movies:\n";
+                Commands.addFilm(textBox1.Text);
+                //label4.Text += Commands.ans.Search[1].Title;
+                dataGridView1.DataSource = Commands.films;
+                dataGridView1.Update();
+                foreach (var film in Commands.films)
                 {
-                    str += item.Title + "\n";
+                    //str += film.Title + "\n";
+
+                    //dataGridView1.Rows.Add(false, film.Title, film.Year, film.ImdbID, film.Type, film.Poster);
+
+                    label4.Text += film.Title + "\n";
                 }
-                label4.Text = str;
-
-                dataGridView1.DataSource = Commands.addFilm(textBox1.Text).ToArray().Select((x, index) =>
-                    new { Number = index + 1, Type = x.Type, Title = x.Title, Year = x.year, Poster = x.Poster }).ToList();
-
-                label1.Text = "OK";
+                label4.Text += "End.";
+                button2.Visible = true;
+                comboBox2.Text = "";
                 
+
 
             }
 
             if (comboBox2.Text == "Remove Film")
             {
+                button2.Visible = true;
+                textBox1.Enabled = true;
                 label3.Text = Commands.DeleteMovie(con, textBox1.Text);
                 LoadData();
+                
             }
             if (comboBox2.Text == "Info")
             {
+                textBox1.Enabled = true;
                 LoadDataInfoYear(textBox1.Text);
             }
-           
-           
+            
         }
 
         public static void label4_Click(object sender, EventArgs e)
@@ -165,19 +215,39 @@ namespace ConnectionAPIGUI
 
         }
 
-        private void AddCheckBoxColumn()
+        private void button2_Click_1(object sender, EventArgs e)
         {
-            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
+            if (comboBox2.Text == "Add Film")
             {
-                HeaderText = "Select",
-                Name = "checkBoxColumn",
-                Width = 50
-            };
-            dataGridView1.Columns.Insert(0, checkBoxColumn);
+                label4.Text = "Selected:\n";
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells[0].Value != null && dataGridView1.Rows[i].Cells[0].Value.Equals(true))
+                    {
+                        label4.Text += dataGridView1.Rows[i].Cells[1].Value;
+                        con.Insert(Commands.films, i);
+                    }
+                }
+            }
+            if (comboBox2.Text == "Remove Film")
+            {
+                label4.Text = "Selected for Deletion:\n";
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells[0].Value != null && dataGridView1.Rows[i].Cells[0].Value.Equals(true))
+                    {
+                        string titleToDelete = dataGridView1.Rows[i].Cells["Title"].Value.ToString();
+                        con.Delete(titleToDelete);
+                        label4.Text += titleToDelete + "\n";
+                    }
+                }
+                LoadData();
+            }
+        }
         }
 
     }
-}
+
 
 //gamma
 //subject subscribe gamma

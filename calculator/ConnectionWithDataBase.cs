@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 
 
 namespace ConnectionAPIGUI
@@ -108,26 +109,25 @@ namespace ConnectionAPIGUI
             }
         }
         //
-        internal string  Insert(Answer ans)
+        internal string  Insert(List<Film> films, int index)
         {
             string str = "";
             if (this.OpenConnection() == true)
             {
-                foreach (var movie in ans.search)
+                
+                if (!isMovieExists(films[index].ImdbID))
                 {
-                    if (!isMovieExists(movie.imdbID))
-                    {
-                        string query = $"INSERT INTO film_info (IMDB_ID, Type, Title, Year, Poster) VALUES('{movie.imdbID}', '{movie.Type}', \"{movie.Title}\", '{movie.year}', '{movie.Poster}');";
-                        MySqlCommand cmd = new MySqlCommand(query, connection);
-                        cmd.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        str += $"\nФильм с названием {movie.Title} уже существует в базе данных";
-                        
-                    }
-
+                    string query = $"INSERT INTO film_info (IMDB_ID, Type, Title, Year, Poster) VALUES('{films[index].ImdbID}', '{films[index].Type}', \"{films[index].Title}\", '{films[index].Year}', '{films[index].Poster}');";
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
                 }
+                else
+                {
+                    str += $"\nФильм с названием {films[index].Title} уже существует в базе данных";
+                        
+                }
+
+                
                 this.CloseConnection();
                 
             }

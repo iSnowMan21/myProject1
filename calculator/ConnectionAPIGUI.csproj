@@ -122,6 +122,7 @@
     <Compile Include="Answer.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="ConnectionWithDataBase.cs" />
+    <Compile Include="Film.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
