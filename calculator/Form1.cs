@@ -194,7 +194,7 @@ namespace ConnectionAPIGUI
                 label4.Text += "End.";
                 textBox1.Enabled = true;
                 button1.Visible = true;
-                comboBox2.Text = "";
+                
                 textBox1.Text = "";
                
 
