@@ -94,6 +94,7 @@ namespace ConnectionAPIGUI
             this.button1.TabIndex = 5;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // dataGridView1
@@ -135,6 +136,7 @@ namespace ConnectionAPIGUI
             this.button2.TabIndex = 10;
             this.button2.Text = "OK";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // Form1

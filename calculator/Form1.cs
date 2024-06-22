@@ -128,6 +128,7 @@ namespace ConnectionAPIGUI
             {
                 textBox1.Visible = true;
                 label2.Visible = true;
+                button1.Visible = true;
                 dataGridView1.Visible = true;
                 LoadData();
                 dataGridView1.ForeColor = Color.Red;
@@ -153,8 +154,7 @@ namespace ConnectionAPIGUI
                 dataGridView1.Visible = true;
                 label3.Text = "";
             }
-            textBox1.Enabled = !textBox1.Enabled;
-            button1.Visible = !button1.Visible;
+            
 
         }
         private void button1_Click_1(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace ConnectionAPIGUI
             
             if (comboBox2.Text == "Add Film")
             {
-               textBox1.Enabled = true;
+
                 //button1.Visible = true;
                 //int[] theData = new int[] { -14, 17, 5, 11, 2 };
                 //dataGridView1.DataSource = theData.Where(x => x > 0).Select((x, index) =>
@@ -187,10 +187,12 @@ namespace ConnectionAPIGUI
                     label4.Text += film.Title + "\n";
                 }
                 label4.Text += "End.";
+                textBox1.Enabled = true;
+                button1.Visible = true;
                 button2.Visible = true;
                 comboBox2.Text = "";
-                
-
+                textBox1.Text = "";
+               
 
             }
 
