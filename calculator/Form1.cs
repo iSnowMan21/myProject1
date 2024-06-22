@@ -143,9 +143,13 @@ namespace ConnectionAPIGUI
 
 
             if (comboBox2.SelectedItem != null && comboBox2.SelectedItem.ToString() == "Remove Film")
-            { 
+            {
+                
                 label2.Text = "Введите фильм который хотите удалить";
                 label3.Text = "";
+                textBox1.Visible = false;
+                button1.Visible = false;
+                label2.Visible = false;
             }
             if (comboBox2.SelectedItem != null && comboBox2.SelectedItem.ToString() == "Info")
             {
@@ -198,7 +202,7 @@ namespace ConnectionAPIGUI
 
             if (comboBox2.Text == "Remove Film")
             {
-                textBox1.Enabled = true;
+
                 label3.Text = Commands.DeleteMovie(con, textBox1.Text);
                 LoadData();
                 
