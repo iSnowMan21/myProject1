@@ -129,6 +129,7 @@ namespace ConnectionAPIGUI
                 textBox1.Visible = true;
                 label2.Visible = true;
                 button1.Visible = true;
+                button2.Visible = true;
                 dataGridView1.Visible = true;
                 LoadData();
                 dataGridView1.ForeColor = Color.Red;
@@ -189,7 +190,6 @@ namespace ConnectionAPIGUI
                 label4.Text += "End.";
                 textBox1.Enabled = true;
                 button1.Visible = true;
-                button2.Visible = true;
                 comboBox2.Text = "";
                 textBox1.Text = "";
                
@@ -198,7 +198,6 @@ namespace ConnectionAPIGUI
 
             if (comboBox2.Text == "Remove Film")
             {
-                button2.Visible = true;
                 textBox1.Enabled = true;
                 label3.Text = Commands.DeleteMovie(con, textBox1.Text);
                 LoadData();
