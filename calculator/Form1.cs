@@ -236,7 +236,7 @@ namespace ConnectionAPIGUI
             }
             if (comboBox2.Text == "Remove Film")
             {
-                label4.Text = "Selected for Deletion:\n";
+                label4.Text = "Selected :\n";
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[0].Value != null && dataGridView1.Rows[i].Cells[0].Value.Equals(true))
